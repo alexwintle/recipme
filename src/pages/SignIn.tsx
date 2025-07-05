@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../api/firebase.config';
 import { AuthContext } from '../contexts/AuthContext';
 
-export default function SignInScreen() {
+const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,3 +35,5 @@ export default function SignInScreen() {
     </View>
   );
 }
+
+export default SignIn;

@@ -55,7 +55,7 @@ const LoginScreen = () => {
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}
-            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            {error ? <Text testID='error-message' style={styles.errorText}>{error}</Text> : null}
         </View>
     );
 }

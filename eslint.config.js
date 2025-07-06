@@ -1,12 +1,12 @@
 import js from '@eslint/js';
-import typescript from 'eslint-plugin-ts';
+import tseslint from 'typescript-eslint';
 
 export default [
   js.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
-      ts: typescript
+      ts: tseslint
     },
     languageOptions: {
       parser: 'typescript-eslint-parser',

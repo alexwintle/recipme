@@ -1,12 +1,11 @@
-import { renderHook } from '@testing-library/react';
 import useAuthValidation from '../../hooks/useAuthValidation';
 
-describe('useAuthValidation', () => {
-  test('validateEmailAndPassword returns appropriate error messages', () => {
-    const { result } = renderHook(() => useAuthValidation());
-    expect(result.current.validateEmailAndPassword('', '')).toBe('Email cannot be empty');
-    expect(result.current.validateEmailAndPassword('invalid', '123')).toBe('Please enter a valid email address');
-    expect(result.current.validateEmailAndPassword('test@example.com', '')).toBe('Password cannot be empty');
-    expect(result.current.validateEmailAndPassword('test@example.com', '123')).toBeUndefined();
+describe('useAuthValidation hook', () => {
+  test('validateLogin returns appropriate error messages', () => {
+    const { validateLogin } = useAuthValidation();
+    expect(validateLogin('', '')).toBe('Email cannot be empty');
+    expect(validateLogin('invalid', '123')).toBe('Please enter a valid email address');
+    expect(validateLogin('test@example.com', '')).toBe('Password cannot be empty');
+    expect(validateLogin('test@example.com', '123')).toBeUndefined();
   });
 });

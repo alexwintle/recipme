@@ -1,5 +1,5 @@
 interface AuthValidation {
-    validateEmailAndPassword: (email: string, password: string) => string | undefined;
+    validateLogin: (email: string, password: string) => string | undefined;
 }
 
 export default function useAuthValidation(): AuthValidation {
@@ -11,7 +11,7 @@ export default function useAuthValidation(): AuthValidation {
 
     const isPasswordEmpty = (password: string) => password.trim() === '';
 
-    const validateEmailAndPassword = (email: string, password: string): string | undefined => {
+    const validateLogin = (email: string, password: string): string | undefined => {
         if (isEmailEmpty(email)) return 'Email cannot be empty';
         if (!validateEmail(email)) return 'Please enter a valid email address';
         if (isPasswordEmpty(password)) return 'Password cannot be empty';
@@ -20,6 +20,6 @@ export default function useAuthValidation(): AuthValidation {
     };
 
     return {
-        validateEmailAndPassword
+        validateLogin
     };
 }

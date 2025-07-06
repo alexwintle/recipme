@@ -11,7 +11,7 @@ const SignInScreen = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { validateEmailAndPassword } = useAuthValidation();
+    const { validateLogin: validateEmailAndPassword } = useAuthValidation();
 
     const signIn = async () => {
         setError('');

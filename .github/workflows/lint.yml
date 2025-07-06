@@ -20,8 +20,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Verify ESLint config content
-        run: cat eslint.config.js
-
       - name: Run ESLint
         run: npx eslint . --ext .ts,.tsx

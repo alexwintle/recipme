@@ -29,7 +29,7 @@ describe('LoginScreen', () => {
         await user.type(await screen.findByPlaceholderText('Enter an email'), 'invalid-email');
         await user.press(await screen.findByText('Login'));
 
-        expect(await screen.findByText('Please enter a valid email address')).toBeOnTheScreen();
+        expect(await screen.findByTestId('error-message')).toHaveTextContent('Please enter a valid email address');
     });
 
     test('Should not render error if user has entered a valid email and password', async () => {

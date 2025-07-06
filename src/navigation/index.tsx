@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignIn from '../screens/SignIn';
+import SignInScreen from '../screens/SignInScreen';
 import { AuthContext } from '../contexts/AuthContext';
-import Home from '../screens/HomeScreen';
+import HomeScreen from '../screens/HomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,9 +16,9 @@ export default function Navigation() {
         <NavigationContainer>
             <Stack.Navigator>
                 {user ?
-                    <Stack.Screen name="Home" component={Home} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
                     :
-                    <Stack.Screen name="SignIn" component={SignIn} />
+                    <Stack.Screen name="SignIn" component={SignInScreen} />
                 }
             </Stack.Navigator>
         </NavigationContainer>

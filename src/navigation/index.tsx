@@ -18,7 +18,7 @@ export default function Navigation() {
                 {user ?
                     <Stack.Screen name="Home" component={HomeScreen} />
                     :
-                    <Stack.Screen name="SignIn" component={LoginScreen} />
+                    <Stack.Screen name="Login" component={LoginScreen} />
                 }
             </Stack.Navigator>
         </NavigationContainer>

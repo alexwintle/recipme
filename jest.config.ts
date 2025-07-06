@@ -13,7 +13,7 @@ const config: Config = {
         '^.+\\.(js|jsx|ts|tsx|mjs)$': 'babel-jest'
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'mjs'],
-    setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+    setupFilesAfterEnv: [],
     testMatch: [
         "<rootDir>/src/__tests__/**/*.test.ts",
         "<rootDir>/src/__tests__/**/*.test.tsx",

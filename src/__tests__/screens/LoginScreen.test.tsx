@@ -1,14 +1,12 @@
 import { render, screen } from '@testing-library/react-native';
-import LoginScreen from '../LoginScreen';
-
-jest.mock('firebase/auth', () => ({
-  getAuth: jest.fn(() => ({})),
-  signInWithEmailAndPassword: jest.fn(() => Promise.resolve({ user: { uid: 'mock-uid', email: 'test@example.com' } })),
-}));
+import LoginScreen from '../../screens/LoginScreen';
+import { signInSuccessful } from '../mocks/firebaseAuthMocks';
 
 describe('LoginScreen', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
+        signInSuccessful();
     });
 
     test('Text renders correctly on LoginScreen', () => {
@@ -16,4 +14,5 @@ describe('LoginScreen', () => {
 
         expect(screen.getByText('Login')).toBeOnTheScreen();
     });
+
 });

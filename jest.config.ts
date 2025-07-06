@@ -15,6 +15,10 @@ const config: Config = {
     },
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'mjs'],
     setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+    testMatch: [
+        "<rootDir>/src/__tests__/**/*.test.ts",
+        "<rootDir>/src/__tests__/**/*.test.tsx",
+    ],
 };
 
 export default config;

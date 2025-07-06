@@ -1,4 +1,4 @@
-import useAuthValidation from '../../hooks/useAuthValidation';
+import useAuthValidation from "../../hooks/useAuthValidation";
 
 describe('useAuthValidation hook', () => {
   test('validateLogin returns appropriate error messages', () => {

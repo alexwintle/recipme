@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../api/firebase.config';
+import { auth } from '../config/firebase.config';
 import useAuthValidation from '../hooks/useAuthValidation';
 import styles from '../styles/styles';
 

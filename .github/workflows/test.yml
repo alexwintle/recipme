@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Clear Jest cache
-        run: jest --clearCache
+        run: npx jest --clearCache
 
       - name: Run tests
         run: npm run testFinal

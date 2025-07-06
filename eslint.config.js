@@ -6,10 +6,14 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
-      ts: tseslint
+      '@typescript-eslint': tseslint.plugin // <-- CHANGED
     },
     languageOptions: {
-      parser: 'typescript-eslint-parser',
+      parser: tseslint.parser,
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
     },

@@ -16,5 +16,18 @@ export default defineConfig([
                 "version": "detect"
             }
         }
+    },
+    {
+        files: [
+            "jest.setup.js",
+            "src/__tests__/**/*.test.ts",
+            "src/__tests__/**/*.test.tsx"
+        ],
+        languageOptions: {
+            globals: {
+                ...globals.jest,
+            }
+        },
+        rules: {}
     }
 ]);

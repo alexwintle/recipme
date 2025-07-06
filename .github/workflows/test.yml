@@ -24,4 +24,4 @@ jobs:
         run: npx jest --clearCache
 
       - name: Run tests
-        run: npm run testFinal
+        run: npm run test

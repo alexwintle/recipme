@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import LoginScreen from '../../screens/LoginScreen';
 import { signInSuccessful } from '../mocks/firebaseAuthMocks';

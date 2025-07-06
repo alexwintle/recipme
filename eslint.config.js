@@ -1,76 +1,20 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
 
-export default [
-  js.configs.recommended,
-  {
-    files: [
-      '**/*.js',
-      '**/*.ts',
-      '**/*.cjs',
-      '**/*.mjs',
-    ],
-    env: {
-      node: true,
-    },
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        module: 'readonly',
-        exports: 'readonly',
-        require: 'readonly',
-      },
-    },
-    rules: {},
-  },
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    plugins: {
-      '@typescript-eslint': tseslint.plugin,
-    },
-    env: {
-      browser: true,
-      es2021: true,
-      node: true,
-    },
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        project: './tsconfig.json',
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-    rules: {
-      ...tseslint.configs.recommended.rules,
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_',
-        },
-      ],
-    },
-  },
-  {
-    files: [
-      '**/__tests__/**/*.ts',
-      '**/__tests__/**/*.tsx',
-      '**/*.test.ts',
-      '**/*.test.tsx',
-      '**/*.spec.ts',
-      '**/*.spec.tsx',
-      'jest.config.ts',
-      'jest.setup.js',
-    ],
-    env: {
-      jest: true,
-      node: true,
-      es2021: true,
-    },
-    languageOptions: {},
-    rules: {},
-  },
-];
+
+export default defineConfig([
+    { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], plugins: { js }, extends: ["js/recommended"] },
+    { files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"], languageOptions: { globals: globals.browser } },
+    tseslint.configs.recommended,
+    pluginReact.configs.flat.recommended,
+    {
+        "settings": {
+            "react": {
+                "version": "detect"
+            }
+        }
+    }
+]);

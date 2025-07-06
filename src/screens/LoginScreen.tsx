@@ -3,11 +3,12 @@ import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../api/firebase.config';
 import useAuthValidation from '../hooks/useAuthValidation';
+import styles from '../styles/styles';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
     const { validateLogin } = useAuthValidation();
@@ -33,17 +34,18 @@ const LoginScreen = () => {
     };
 
     return (
-        <View>
-            <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-            <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Button title="Login" onPress={login} disabled={loading}/>
+        <View style={styles.container}>
+            <Text style={styles.h1} accessibilityRole="header">Recipme</Text>
+
+            <TextInput placeholder="Enter an email" value={email} onChangeText={setEmail} style={styles.input} />
+            <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
+
+            <View style={styles.buttonContainer}>
+                <Button title="Login please" onPress={login} disabled={loading} />
+            </View>
+
             {loading && <ActivityIndicator size="large" color="#0000ff" />}
-            {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
         </View>
     );
 }

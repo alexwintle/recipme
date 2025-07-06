@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { AuthProvider } from './src/contexts/AuthContext';
 import Navigation from './src/navigation';
+import '@expo/metro-runtime';
 
 export default function App() {
     return (

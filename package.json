@@ -7,19 +7,12 @@
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
-        "test": "jest --watch --coverage=false --changedSince=origin/main",
+        "test": "jest --watch --coverage=false --changedSince=origin/master",
         "testDebug": "jest -o --watch --coverage=false",
         "testFinal": "jest",
         "updateSnapshots": "jest -u --coverage=false"
     },
-    "jest": {
-        "preset": "jest-expo",
-        "transformIgnorePatterns": [
-            "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
-        ]
-    },
     "dependencies": {
-        "@expo/metro-runtime": "~5.0.4",
         "@react-navigation/native": "^7.1.14",
         "@react-navigation/native-stack": "^7.3.21",
         "expo": "~53.0.17",
@@ -33,10 +26,12 @@
     "devDependencies": {
         "@babel/core": "^7.25.2",
         "@babel/preset-env": "^7.28.0",
+        "@expo/metro-runtime": "^5.0.4",
         "@testing-library/jest-native": "^5.4.3",
         "@testing-library/react-native": "^13.2.0",
         "@types/jest": "^30.0.0",
         "@types/react": "~19.0.10",
+        "babel-jest": "^30.0.4",
         "jest": "~29.7.0",
         "jest-expo": "~53.0.9",
         "typescript": "~5.8.3"

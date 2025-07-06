@@ -41,7 +41,7 @@ const LoginScreen = () => {
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <Button title="Login please" onPress={login} disabled={loading} />
+                <Button title="Login" onPress={login} disabled={loading} />
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}

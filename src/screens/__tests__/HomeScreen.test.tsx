@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react-native';
 import HomeScreen from '../HomeScreen';
 
 describe('HomeScreen', () => {
-    it('Text renders correctly on HomeScreen', () => {
+    test('Text renders correctly on HomeScreen', () => {
         render(<HomeScreen />);
 
         expect(screen.getByText('Home Page')).toBeOnTheScreen();

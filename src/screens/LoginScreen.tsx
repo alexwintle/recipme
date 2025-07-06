@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 import { auth } from '../config/firebase.config';
 import useAuthValidation from '../hooks/useAuthValidation';
 import styles from '../styles/styles';
@@ -26,8 +27,17 @@ const LoginScreen = () => {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            if (e instanceof FirebaseError) {
+                setError(e.message);
+                console.error("Firebase Auth Error Code:", e.code);
+            } else if (e instanceof Error) {
+                setError(e.message);
+                console.error("General Error:", e);
+            } else {
+                setError('An unexpected error occurred.');
+                console.error("Unexpected Error:", e);
+            }
         } finally {
             setLoading(false);
         }

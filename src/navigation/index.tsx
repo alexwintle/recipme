@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignInScreen from '../screens/SignInScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { AuthContext } from '../contexts/AuthContext';
 import HomeScreen from '../screens/HomeScreen';
 
@@ -18,7 +18,7 @@ export default function Navigation() {
                 {user ?
                     <Stack.Screen name="Home" component={HomeScreen} />
                     :
-                    <Stack.Screen name="SignIn" component={SignInScreen} />
+                    <Stack.Screen name="SignIn" component={LoginScreen} />
                 }
             </Stack.Navigator>
         </NavigationContainer>

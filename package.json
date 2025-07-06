@@ -8,9 +8,9 @@
         "android": "expo start --android",
         "ios": "expo start --ios",
         "web": "expo start --web",
-        "test": "cross-env NODE_ENV=test jest --watch --coverage=false --changedSince=origin/master",
+        "test": "cross-env NODE_ENV=test jest",
+        "testWatch": "cross-env NODE_ENV=test jest --watch --coverage=false --changedSince=origin/master",
         "testDebug": "cross-env NODE_ENV=test jest -o --watch --coverage=false",
-        "testFinal": "cross-env NODE_ENV=test jest",
         "updateSnapshots": "cross-env NODE_ENV=test jest -u --coverage=false"
     },
     "dependencies": {
@@ -30,7 +30,6 @@
         "@babel/preset-env": "^7.28.0",
         "@eslint/js": "^9.30.1",
         "@expo/metro-runtime": "^5.0.4",
-        "@testing-library/jest-native": "^5.4.3",
         "@testing-library/react-native": "^13.2.0",
         "@types/jest": "^30.0.0",
         "@types/react": "~19.0.10",

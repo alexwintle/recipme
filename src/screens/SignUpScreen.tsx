@@ -5,7 +5,7 @@ import styles from "../styles/styles";
 const SignUpScreen = () => {
 
     return (
-        <View style={styles.container} testID="sign-in-screen">
+        <View style={styles.container} testID="sign-up-screen">
             <Text style={styles.h1}>Sign Up</Text>
         </View>
     )

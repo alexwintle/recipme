@@ -32,7 +32,6 @@ const LoginScreen = () => {
         }).catch((e: Error) => {
             if (e instanceof FirebaseError) {
                 setError('You have entered the wrong username or password. Please check them and try again.');
-                console.error("Firebase Auth Error Code:", e.code);
             } else if (e instanceof Error) {
                 setError(e.message);
                 console.error("General Error:", e);
@@ -46,7 +45,7 @@ const LoginScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} testID="log-in-screen">
             <Text style={styles.h1} accessibilityRole="header">Recipme</Text>
 
             <TextInput placeholder="Enter an email" value={email} onChangeText={setEmail} style={styles.input} />

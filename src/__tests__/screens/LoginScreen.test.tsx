@@ -4,11 +4,6 @@ import LoginScreen from '../../screens/LoginScreen';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-jest.mock('firebase/auth', () => ({
-    getAuth: jest.fn(() => ({})),
-    signInWithEmailAndPassword: jest.fn(() => Promise.resolve({ user: { uid: 'mock-uid', email: 'test@example.com' } })),
-}));
-
 describe('LoginScreen', () => {
     beforeEach(() => {
         jest.clearAllMocks();

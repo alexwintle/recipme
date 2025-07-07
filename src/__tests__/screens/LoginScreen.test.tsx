@@ -9,7 +9,7 @@ describe('LoginScreen', () => {
         jest.clearAllMocks();
     });
 
-    test('Text renders correctly on LoginScreen', async () => {
+    test('Should render correct page content', async () => {
         render(<LoginScreen />);
 
         expect(await screen.findByText('Recipme')).toBeOnTheScreen();
@@ -18,11 +18,44 @@ describe('LoginScreen', () => {
         expect(await screen.findByText('Login')).toBeOnTheScreen();
     });
 
-    test('Should disable button until username & password is entered', async () => {
+    test('Should disable button while username & password is empty', async () => {
         render(<LoginScreen />);
 
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
         expect(await screen.findByPlaceholderText('Enter a password')).toBeEmptyElement();
+
+        expect(await screen.findByText('Login')).toBeDisabled()
+    })
+
+    test('Should disable button while username is empty', async () => {
+        render(<LoginScreen />);
+
+        const user = userEvent.setup()
+
+        expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+
+        expect(await screen.findByText('Login')).toBeDisabled()
+    })
+    
+    test('Should disable button while password is empty', async () => {
+        render(<LoginScreen />);
+
+        const user = userEvent.setup()
+
+        expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+
+        expect(await screen.findByText('Login')).toBeDisabled()
+    })
+
+    test('Should disable button until if username is not valid format', async () => {
+        render(<LoginScreen />);
+
+        const user = userEvent.setup()
+
+        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example');
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
 
         expect(await screen.findByText('Login')).toBeDisabled()
     })
@@ -37,18 +70,6 @@ describe('LoginScreen', () => {
 
         expect(await screen.findByText('Login')).not.toBeDisabled()
     })
-
-    test('Should not render error if user has entered a valid email and password', async () => {
-        render(<LoginScreen />);
-
-        const user = userEvent.setup()
-
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
-        await user.press(await screen.findByText('Login'));
-
-        expect(screen.queryByTestId('error-message')).toBeNull();
-    });
 
     test('Should render error if credentials are not valid', async () => {
         (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(

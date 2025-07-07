@@ -16,7 +16,7 @@ const LoginScreen = () => {
 
     const isDisabled = !email || !password || loading;
 
-    const login = async () => {
+    const onLogin = async () => {
         setError('');
 
         const errorMessage = validateLogin(email, password);
@@ -27,9 +27,9 @@ const LoginScreen = () => {
 
         setLoading(true);
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (e: unknown) {
+        signInWithEmailAndPassword(auth, email, password).then(() => {
+            //TODO navigate to home page
+        }).catch((e: Error) => {
             if (e instanceof FirebaseError) {
                 setError('You have entered the wrong username or password. Please check them and try again.');
                 console.error("Firebase Auth Error Code:", e.code);
@@ -40,9 +40,9 @@ const LoginScreen = () => {
                 setError('An unexpected error occurred.');
                 console.error("Unexpected Error:", e);
             }
-        } finally {
+        }).finally(() => {
             setLoading(false);
-        }
+        })
     };
 
     return (
@@ -53,7 +53,7 @@ const LoginScreen = () => {
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={login} disabled={isDisabled} />
+                <Button title="Login" onPress={onLogin} disabled={isDisabled} />
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}

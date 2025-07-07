@@ -31,6 +31,9 @@ export default StyleSheet.create({
         backgroundColor: '#57984f',
         justifyContent: 'center'
     },
+    buttonDisabled: {
+        opacity: 0.2
+    },
     errorText: {
         color: 'red',
         textAlign: 'center',

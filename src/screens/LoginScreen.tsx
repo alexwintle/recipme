@@ -52,7 +52,7 @@ const LoginScreen = () => {
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={onLogin} disabled={isDisabled}>
+                <TouchableOpacity style={[styles.button, isDisabled && styles.buttonDisabled]} onPress={onLogin} disabled={isDisabled}>
                     <Text>Login</Text>
                 </TouchableOpacity>
             </View>

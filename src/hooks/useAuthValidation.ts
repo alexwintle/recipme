@@ -1,25 +1,14 @@
 interface AuthValidation {
-    validateLogin: (email: string, password: string) => string | undefined;
+    isEmailValidFormat: (email: string) => boolean;
+    isPasswordEmpty: (password: string) => boolean;
 }
 
 export default function useAuthValidation(): AuthValidation {
-    const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
-
-    const validatePassword = (password: string) => password.length > 0;
-
-    const isEmailEmpty = (email: string) => email.trim() === '';
-
-    const isPasswordEmpty = (password: string) => password.trim() === '';
-
-    const validateLogin = (email: string, password: string): string | undefined => {
-        if (isEmailEmpty(email)) return 'Email cannot be empty';
-        if (!validateEmail(email)) return 'Please enter a valid email address';
-        if (isPasswordEmpty(password)) return 'Password cannot be empty';
-        if (!validatePassword(password)) return 'Please enter a valid password';
-        return undefined;
-    };
+    const isEmailValidFormat = (email: string) => /\S+@\S+\.\S+/.test(email);
+    const isPasswordEmpty = (password: string) => password.length > 0;
 
     return {
-        validateLogin
+        isEmailValidFormat,
+        isPasswordEmpty
     };
 }

@@ -12,19 +12,11 @@ const LoginScreen = () => {
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { validateLogin } = useAuthValidation();
+    const { isEmailValidFormat, isPasswordEmpty } = useAuthValidation();
 
-    const isDisabled = !email || !password || loading;
+    const isDisabled = !isPasswordEmpty(password) || !isEmailValidFormat(email) || loading;
 
     const onLogin = async () => {
-        setError('');
-
-        const errorMessage = validateLogin(email, password);
-        if (errorMessage) {
-            setError(errorMessage);
-            return;
-        }
-
         setLoading(true);
 
         signInWithEmailAndPassword(auth, email, password).then(() => {

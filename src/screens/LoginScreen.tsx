@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
+import { View, TextInput, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { auth } from '../config/firebase.config';
@@ -32,7 +32,6 @@ const LoginScreen = () => {
         }).catch((e: Error) => {
             if (e instanceof FirebaseError) {
                 setError('You have entered the wrong username or password. Please check them and try again.');
-                console.error("Firebase Auth Error Code:", e.code);
             } else if (e instanceof Error) {
                 setError(e.message);
                 console.error("General Error:", e);
@@ -46,14 +45,16 @@ const LoginScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} testID="log-in-screen">
             <Text style={styles.h1} accessibilityRole="header">Recipme</Text>
 
             <TextInput placeholder="Enter an email" value={email} onChangeText={setEmail} style={styles.input} />
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={onLogin} disabled={isDisabled} />
+                <TouchableOpacity style={[styles.button, isDisabled && styles.buttonDisabled]} onPress={onLogin} disabled={isDisabled}>
+                    <Text>Login</Text>
+                </TouchableOpacity>
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}

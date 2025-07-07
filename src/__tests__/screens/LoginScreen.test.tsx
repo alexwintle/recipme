@@ -4,11 +4,6 @@ import LoginScreen from '../../screens/LoginScreen';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 
-jest.mock('firebase/auth', () => ({
-    getAuth: jest.fn(() => ({})),
-    signInWithEmailAndPassword: jest.fn(() => Promise.resolve({ user: { uid: 'mock-uid', email: 'test@example.com' } })),
-}));
-
 describe('LoginScreen', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -29,7 +24,7 @@ describe('LoginScreen', () => {
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
         expect(await screen.findByPlaceholderText('Enter a password')).toBeEmptyElement();
 
-        expect(await screen.findByRole('button')).toBeDisabled()
+        expect(await screen.findByText('Login')).toBeDisabled()
     })
 
     test('Should enable button when username & password is entered', async () => {
@@ -40,7 +35,7 @@ describe('LoginScreen', () => {
         await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
         await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
 
-        expect(await screen.findByRole('button')).not.toBeDisabled()
+        expect(await screen.findByText('Login')).not.toBeDisabled()
     })
 
     test('Should not render error if user has entered a valid email and password', async () => {

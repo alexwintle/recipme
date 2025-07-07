@@ -14,6 +14,8 @@ const LoginScreen = () => {
 
     const { validateLogin } = useAuthValidation();
 
+    const isDisabled = !email || !password || loading;
+
     const login = async () => {
         setError('');
 
@@ -51,7 +53,7 @@ const LoginScreen = () => {
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={login} disabled={loading} />
+                <Button title="Login" onPress={login} disabled={isDisabled} />
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}

@@ -21,16 +21,25 @@ describe('LoginScreen', () => {
         expect(await screen.findByText('Login')).toBeOnTheScreen();
     });
 
-    test('Should render error if user has entered an invalid email', async () => {
+    test('Should disable button until username & password is entered', async () => {
+        render(<LoginScreen />);
+
+        expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
+        expect(await screen.findByPlaceholderText('Enter a password')).toBeEmptyElement();
+
+        expect(await screen.findByRole('button')).toBeDisabled()
+    })
+
+    test('Should enable button when username & password is entered', async () => {
         render(<LoginScreen />);
 
         const user = userEvent.setup()
 
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'invalid-email');
-        await user.press(await screen.findByText('Login'));
+        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
 
-        expect(await screen.findByTestId('error-message')).toHaveTextContent('Please enter a valid email address');
-    });
+        expect(await screen.findByRole('button')).not.toBeDisabled()
+    })
 
     test('Should not render error if user has entered a valid email and password', async () => {
         render(<LoginScreen />);

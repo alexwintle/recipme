@@ -1,6 +1,8 @@
 import React from 'react';
 import { render, screen, userEvent } from '@testing-library/react-native';
 import LoginScreen from '../../screens/LoginScreen';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 jest.mock('firebase/auth', () => ({
     getAuth: jest.fn(() => ({})),
@@ -51,5 +53,21 @@ describe('LoginScreen', () => {
         await user.press(await screen.findByText('Login'));
 
         expect(screen.queryByTestId('error-message')).toBeNull();
+    });
+
+    test('Should render error if credentials are not valid', async () => {
+        (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(
+            new FirebaseError('auth/invalid-credential', 'Invalid credentials')
+        );
+
+        render(<LoginScreen />);
+
+        const user = userEvent.setup()
+
+        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+        await user.press(await screen.findByText('Login'));
+
+        expect(await screen.findByTestId('error-message')).toHaveTextContent('You have entered the wrong username or password. Please check them and try again.');
     });
 });

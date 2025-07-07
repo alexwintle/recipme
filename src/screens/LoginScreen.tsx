@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
+import { View, TextInput, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { auth } from '../config/firebase.config';
@@ -52,7 +52,9 @@ const LoginScreen = () => {
             <TextInput placeholder="Enter a password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
 
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={onLogin} disabled={isDisabled} />
+                <TouchableOpacity style={styles.button} onPress={onLogin} disabled={isDisabled}>
+                    <Text>Login</Text>
+                </TouchableOpacity>
             </View>
 
             {loading && <ActivityIndicator size="large" color="#0000ff" />}

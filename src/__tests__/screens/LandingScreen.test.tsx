@@ -19,8 +19,8 @@ describe('LandingScreen', () => {
 
         expect(await screen.findByText('Landing Page')).toBeOnTheScreen();
         expect(await screen.findByText('Welcome to the landing page of our application!')).toBeOnTheScreen();
-        expect(await screen.findByRole('button', { name: 'Login' })).toBeOnTheScreen();
-        expect(await screen.findByRole('button', { name: 'Sign up' })).toBeOnTheScreen();
+        expect(await screen.findByText('Login')).toBeOnTheScreen();
+        expect(await screen.findByText('Sign up')).toBeOnTheScreen();
     })
 
     test('Should navigate to login screen', async () => {
@@ -32,7 +32,10 @@ describe('LandingScreen', () => {
             </NavigationContainer>
         );
 
-        const loginButton = await screen.findByRole('button', { name: 'Login' })
+        const loginButton = await screen.findByText('Login');
+
+        expect(loginButton).toBeOnTheScreen();
+        
         await user.press(loginButton);
 
         expect(await screen.findByTestId('log-in-screen')).toBeTruthy()

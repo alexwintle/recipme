@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/styles';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,8 +12,12 @@ const LandingScreen = () => {
             <Text>Welcome to the landing page of our application!</Text>
 
             <View style={styles.buttonContainer}>
-                <Button title="Login" onPress={() => navigation.navigate('Login')} />
-                <Button title="Sign up" onPress={() => navigation.navigate('SignUp')} />
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
+                    <Text>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Sign Up')}>
+                    <Text>Sign up</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

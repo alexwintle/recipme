@@ -23,7 +23,13 @@ const LoginScreen = () => {
             //TODO navigate to home page
         }).catch((e: Error) => {
             if (e instanceof FirebaseError) {
-                setError('You have entered the wrong username or password. Please check them and try again.');
+                    if (e.code === 'auth/invalid-credential') {
+                        setError('You have entered the wrong username or password. Please check them and try again.');
+                        console.error("Firebase Error:", e.code);
+                    } else {
+                        setError("Unknown firebase error: " + e.code)
+                        console.error("Firebase Error:", e.code);
+                    }
             } else if (e instanceof Error) {
                 setError(e.message);
                 console.error("General Error:", e);

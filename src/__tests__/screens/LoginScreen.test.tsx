@@ -86,4 +86,21 @@ describe('LoginScreen', () => {
 
         expect(await screen.findByTestId('error-message')).toHaveTextContent('You have entered the wrong username or password. Please check them and try again.');
     });
+    
+    test('Should render error if credentials are not valid', async () => {
+        (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(
+            new FirebaseError('auth/service-down', 'Service Down')
+        );
+
+        render(<LoginScreen />);
+
+        const user = userEvent.setup()
+
+        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
+        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+        await user.press(await screen.findByText('Login'));
+
+        expect(await screen.findByTestId('error-message')).toHaveTextContent("Unknown firebase error: auth/service-down");
+    });
+    
 });

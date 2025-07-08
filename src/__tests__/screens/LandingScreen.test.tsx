@@ -28,8 +28,6 @@ describe('LandingScreen', () => {
     })
 
     test('Should navigate to login screen', async () => {
-        const user = userEvent.setup()
-
         render(
             <NavigationContainer>
                 <Stack.Navigator>
@@ -43,14 +41,12 @@ describe('LandingScreen', () => {
 
         expect(loginButton).toBeOnTheScreen();
 
-        await user.press(loginButton);
+        await userEvent.press(loginButton);
 
         expect(await screen.findByTestId('log-in-screen')).toBeTruthy()
     })
 
     test('Should navigate to sign up screen', async () => {
-        const user = userEvent.setup()
-
         render(
             <NavigationContainer>
                 <Stack.Navigator>
@@ -60,11 +56,11 @@ describe('LandingScreen', () => {
             </NavigationContainer>
         );
 
-        const loginButton = await screen.findByText('Sign up');
+        const signUpButton = await screen.findByText('Sign up');
 
-        expect(loginButton).toBeOnTheScreen();
+        expect(signUpButton).toBeOnTheScreen();
 
-        await user.press(loginButton);
+        await userEvent.press(signUpButton);
 
         expect(await screen.findByTestId('sign-up-screen')).toBeTruthy()
     })

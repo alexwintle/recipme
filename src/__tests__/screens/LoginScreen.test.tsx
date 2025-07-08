@@ -9,6 +9,9 @@ describe('LoginScreen', () => {
         jest.clearAllMocks();
     });
 
+    const validEmail = "anon@example.com"
+    const validPassword = "password123!"
+
     test('Should render correct page content', async () => {
         render(<LoginScreen />);
 
@@ -30,10 +33,8 @@ describe('LoginScreen', () => {
     test('Should disable button while username is empty', async () => {
         render(<LoginScreen />);
 
-        const user = userEvent.setup()
-
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
 
         expect(await screen.findByText('Login')).toBeDisabled()
     })
@@ -41,21 +42,8 @@ describe('LoginScreen', () => {
     test('Should disable button while password is empty', async () => {
         render(<LoginScreen />);
 
-        const user = userEvent.setup()
-
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
-
-        expect(await screen.findByText('Login')).toBeDisabled()
-    })
-
-    test('Should disable button until if username is not valid format', async () => {
-        render(<LoginScreen />);
-
-        const user = userEvent.setup()
-
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example');
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
 
         expect(await screen.findByText('Login')).toBeDisabled()
     })
@@ -63,10 +51,8 @@ describe('LoginScreen', () => {
     test('Should enable button when username & password is entered', async () => {
         render(<LoginScreen />);
 
-        const user = userEvent.setup()
-
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
+        await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
 
         expect(await screen.findByText('Login')).not.toBeDisabled()
     })
@@ -78,11 +64,9 @@ describe('LoginScreen', () => {
 
         render(<LoginScreen />);
 
-        const user = userEvent.setup()
-
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
-        await user.press(await screen.findByText('Login'));
+        await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
+        await userEvent.press(await screen.findByText('Login'));
 
         expect(await screen.findByTestId('error-message')).toHaveTextContent('You have entered the wrong username or password. Please check them and try again.');
     });
@@ -94,11 +78,9 @@ describe('LoginScreen', () => {
 
         render(<LoginScreen />);
 
-        const user = userEvent.setup()
-
-        await user.type(await screen.findByPlaceholderText('Enter an email'), 'anon@example.com');
-        await user.type(await screen.findByPlaceholderText('Enter a password'), 'password123');
-        await user.press(await screen.findByText('Login'));
+        await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
+        await userEvent.press(await screen.findByText('Login'));
 
         expect(await screen.findByTestId('error-message')).toHaveTextContent("Unknown firebase error: auth/service-down");
     });

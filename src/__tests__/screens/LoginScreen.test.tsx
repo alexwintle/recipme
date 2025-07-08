@@ -97,7 +97,7 @@ describe('LoginScreen', () => {
         expect(await screen.findByText('Login')).not.toBeDisabled()
     })
 
-    test('Should render error if credentials are not valid', async () => {
+    test('Should render error if email & password doesnt match to an account', async () => {
         (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(
             new FirebaseError('auth/invalid-credential', 'Invalid credentials')
         );
@@ -118,7 +118,28 @@ describe('LoginScreen', () => {
         expect(await screen.findByTestId('error-message')).toHaveTextContent('You have entered the wrong username or password. Please check them and try again.');
     });
     
-    test('Should render error if credentials are not valid', async () => {
+    test('Should render error if email is not a valid format', async () => {
+        (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(
+            new FirebaseError('auth/invalid-email', 'Invalid credentials')
+        );
+
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+
+        await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
+        await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
+        await userEvent.press(await screen.findByText('Login'));
+
+        expect(await screen.findByTestId('error-message')).toHaveTextContent('The email address is not valid. Please check the format.');
+    });
+    
+    test('Should render error if an unknown firebase error occurs', async () => {
         (signInWithEmailAndPassword as jest.Mock).mockRejectedValueOnce(
             new FirebaseError('auth/service-down', 'Service Down')
         );

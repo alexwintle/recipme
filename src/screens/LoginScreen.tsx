@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
-import { auth } from '../config/firebase.config';
-import styles from '../styles/styles';
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
+import styles from "../styles/styles";
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase.config";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState<string>('');
@@ -11,32 +12,41 @@ const LoginScreen = () => {
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
+    const navigation = useNavigation();
+
     const isDisabled = !password || !email || loading;
 
     const onLogin = async () => {
         setLoading(true);
 
-        signInWithEmailAndPassword(auth, email, password).then(() => {
-            //TODO navigate to home page
-        }).catch((e: Error) => {
-            if (e instanceof FirebaseError) {
-                if (e.code === 'auth/invalid-credential') {
-                    setError('You have entered the wrong username or password. Please check them and try again.');
-                    console.error("Firebase Error:", e.code);
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                navigation.navigate('Home')
+            })
+            .catch((e: Error) => {
+                if (e instanceof FirebaseError) {
+                    switch (e.code) {
+                        case 'auth/invalid-credential':
+                            setError('You have entered the wrong username or password. Please check them and try again.');
+                            return;
+                        case 'auth/invalid-email':
+                            setError('The email address is not valid. Please check the format.');
+                            return;
+                        default:
+                            setError("An unknown Firebase error occurred: " + e.code);
+                            return;
+                    }
+                } else if (e instanceof Error) {
+                    setError(e.message);
+                    console.error("General Error:", e);
                 } else {
-                    setError("Unknown firebase error: " + e.code)
-                    console.error("Firebase Error:", e.code);
+                    setError('An unexpected error occurred.');
+                    console.error("Unexpected Error:", e);
                 }
-            } else if (e instanceof Error) {
-                setError(e.message);
-                console.error("General Error:", e);
-            } else {
-                setError('An unexpected error occurred.');
-                console.error("Unexpected Error:", e);
-            }
-        }).finally(() => {
-            setLoading(false);
-        })
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -58,9 +68,12 @@ const LoginScreen = () => {
                 secureTextEntry
                 style={styles.input}
             />
-            
+
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, isDisabled && styles.buttonDisabled]} onPress={onLogin} disabled={isDisabled}>
+                <TouchableOpacity style={[styles.button, isDisabled && styles.buttonDisabled]}
+                    onPress={onLogin}
+                    disabled={isDisabled}
+                >
                     <Text>Login</Text>
                 </TouchableOpacity>
             </View>

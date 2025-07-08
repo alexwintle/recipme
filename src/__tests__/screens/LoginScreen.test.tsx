@@ -3,6 +3,11 @@ import { render, screen, userEvent } from '@testing-library/react-native';
 import LoginScreen from '../../screens/LoginScreen';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from '../../screens/HomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 describe('LoginScreen', () => {
     beforeEach(() => {
@@ -13,7 +18,14 @@ describe('LoginScreen', () => {
     const validPassword = "password123!"
 
     test('Should render correct page content', async () => {
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         expect(await screen.findByText('Recipme')).toBeOnTheScreen();
         expect(await screen.findByPlaceholderText('Enter an email')).toBeOnTheScreen();
@@ -22,7 +34,14 @@ describe('LoginScreen', () => {
     });
 
     test('Should disable button while username & password is empty', async () => {
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
         expect(await screen.findByPlaceholderText('Enter a password')).toBeEmptyElement();
@@ -31,7 +50,14 @@ describe('LoginScreen', () => {
     })
 
     test('Should disable button while username is empty', async () => {
-        render(<LoginScreen />);
+       render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
         await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
@@ -40,7 +66,14 @@ describe('LoginScreen', () => {
     })
     
     test('Should disable button while password is empty', async () => {
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         expect(await screen.findByPlaceholderText('Enter an email')).toBeEmptyElement();
         await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
@@ -49,7 +82,14 @@ describe('LoginScreen', () => {
     })
 
     test('Should enable button when username & password is entered', async () => {
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
         await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
@@ -62,7 +102,14 @@ describe('LoginScreen', () => {
             new FirebaseError('auth/invalid-credential', 'Invalid credentials')
         );
 
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
         await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
@@ -76,13 +123,20 @@ describe('LoginScreen', () => {
             new FirebaseError('auth/service-down', 'Service Down')
         );
 
-        render(<LoginScreen />);
+        render(
+            <NavigationContainer>
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
 
         await userEvent.type(await screen.findByPlaceholderText('Enter an email'), validEmail);
         await userEvent.type(await screen.findByPlaceholderText('Enter a password'), validPassword);
         await userEvent.press(await screen.findByText('Login'));
 
-        expect(await screen.findByTestId('error-message')).toHaveTextContent("Unknown firebase error: auth/service-down");
+        expect(await screen.findByTestId('error-message')).toHaveTextContent("An unknown Firebase error occurred: auth/service-down");
     });
     
 });

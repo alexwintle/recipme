@@ -22,29 +22,21 @@ const SignUpScreen = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(() => {
                 navigation.navigate('Home')
-                // On successful user creation, you would typically navigate to another screen.
-                // TODO: Implement navigation to the home page or a success screen.
-                console.log("User created successfully!");
             })
             .catch((e: Error) => {
-                // Handle errors during user creation
                 if (e instanceof FirebaseError) {
                     switch (e.code) {
                         case 'auth/email-already-in-use':
                             setError('This email address is already in use. Please use a different email or log in.');
-                            console.error("Firebase Error: Email already in use", e.code);
                             return;
                         case 'auth/weak-password':
                             setError('The password is too weak. Please choose a stronger password.');
-                            console.error("Firebase Error: Weak password", e.code);
                             return;
                         case 'auth/invalid-email':
                             setError('The email address is not valid. Please check the format.');
-                            console.error("Firebase Error: Invalid email", e.code);
                             return;
                         default:
                             setError("An unknown Firebase error occurred: " + e.code);
-                            console.error("Firebase Error:", e.code);
                             return;
                     }
                 } else if (e instanceof Error) {
